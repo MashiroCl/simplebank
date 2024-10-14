@@ -29,5 +29,14 @@ test:
 server:
 	go run main.go
 
+network:
+	docker network create bank_network
+
+build_image:
+	docker build -t simplebank:latest .
+
+run_image:
+	docker run --name simplebank --network bank_network -p 8080:8080 --env GIN_MODE=release simplebank:latest
+
 .PHONY: postgres createdb drobdb migrateup migratedown sqlc server migrateup1 migratedown1
 
